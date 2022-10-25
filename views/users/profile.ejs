@@ -1,0 +1,28 @@
+<%- include('../_includes/header.ejs') %>
+
+    <div class="grid">
+        <div class="navbar">
+            <%- include('../_includes/navbar.ejs') %>
+
+        </div>
+        <%- include('../_includes/sidebar.ejs') %>
+
+            <div class="content scrollbar">
+                <div class="profil-row">
+                    <span class="row-label">Nom : </span>
+                    <%=user.nom%>
+                </div>
+                <div class="profil-row">
+                    <span class="row-label">Prénom : </span>
+                    <%=user.prenom%>
+                </div>
+                <div class="profil-row">
+                    <span class="row-label">Email : </span>
+                    <%=user.email%>
+                </div>
+                <div class="profil-row">
+                    <span class="row-label">Rôle : </span>
+                    <%=user.role%>
+                </div>
+            </div>
+    </div>

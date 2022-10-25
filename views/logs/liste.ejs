@@ -1,0 +1,40 @@
+<%- include('../_includes/header.ejs') %>
+    <div class="grid">
+        <div class="navbar">
+            <%- include('../_includes/navbar.ejs') %>
+                <%- include('../_includes/message.ejs') %>
+
+        </div>
+        <%- include('../_includes/sidebar.ejs') %>
+            <div class="content scrollbar">
+                <% logs.forEach(log=> { %>
+                    <div class="log-card">
+                        <div class="log-date">
+                            <% if (log.date.includes('(Coordinated Universal Time)')) { %>
+                        <%=log.date.split(' ')[2] %>
+                        <%=log.date.split(' ')[1] === "Oct"?"/10":""%>/2022
+                        
+                    <% }else { %>
+                        <%=log.date.split('T1')[0].split('-')[2]%>/
+                                    <%=log.date.split('T1')[0].split('-')[1]%>/
+                                        <%=log.date.split('T1')[0].split('-')[0]%>
+
+                                            <% } %>
+                            
+                        </div>
+                        <div class="log-author">
+                            <%=log.auteur%> a <%=log.method==='Création' ? 'ajouté' :''%>
+                                    <%=log.method==='Suppression' ? 'supprimé' :''%>
+                                        <%=log.method==='Mise à jour' ? 'modifié' :''%>
+                                            <%=log.ressource==='Adherents' ? 'un adhérent' :''%>
+                                                <%=log.ressource==='Mot de passe' ? 'un mot de passe d\' utilisateur'
+                                                    :''%>
+                                                      <%=log.ressource==='Utilisateur' ? 'un utilisateur'
+                                                      :''%> à <%=log.heure%>h <%=log.minute%>
+                                                    
+                        </div>
+                    </div>
+                    <% }) %>
+            </div>
+    </div>
+    <%- include('../_includes/footer.ejs') %>

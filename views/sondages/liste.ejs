@@ -1,0 +1,46 @@
+<%- include('../_includes/header.ejs') %>
+    <div class="grid">
+        <div class="navbar">
+            <%- include('../_includes/navbar.ejs') %>
+            <%- include('../_includes/message.ejs') %>
+
+        </div>
+        <%- include('../_includes/sidebar.ejs') %>
+        <div class="content scrollbar">
+            <div onclick="showModal()" class="cta">Ajouter un utilisateur</div>
+            <table class="table">
+                <thead class="table-head">
+                    <tr>
+                        <td class="table-cell text-white">Identité</td>
+                        <td class="table-cell text-white">Rôle</td>
+                        <td class="table-cell text-white">Email</td>
+                        <td class="table-cell text-white">Actions</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% sondages.forEach(sondages=> { %>
+                        <tr class="table-row">
+                            <td class="table-cell semibold">
+                                <%= sondages.nom %>
+                                    <%= sondages.prenom %>
+                            </td>
+                            <td class="table-cell">
+                                <%= sondages.role %>
+                            </td>
+                            <td class="table-cell">
+                                <%= sondages.email %>
+                            </td>
+                            <td class="table-cell table-actions">
+                                <a href="/sondages/<%=sondages._id%>" class="table-icon"><img width="12px" height="12px"
+                                        src="/img/edit.png" alt="edit">
+                                </a>
+                                <a href="/sondagess/delete/<%=sondages._id%>" class="table-icon"><img width="12px" height="12px"
+                                        src="/img/remove.png" alt="remove"></a>
+                            </td>
+                        </tr>
+                        <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <%- include('../_includes/footer.ejs') %>

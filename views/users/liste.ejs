@@ -1,0 +1,122 @@
+<%- include('../_includes/header.ejs') %>
+    <div class="grid">
+        <div class="navbar">
+            <%- include('../_includes/navbar.ejs') %>
+                <%- include('../_includes/message.ejs') %>
+
+        </div>
+        <%- include('../_includes/sidebar.ejs') %>
+            <div class="content scrollbar">
+                <div class="flex">
+                    <div class="search-box">
+                        <input id="query" onkeyup="searchUser()" class="search-query" type="text"
+                            placeholder="Rechercher un adhérent" />
+                        <div class="search-icon">
+                            <img src="img/search.png" width="20px" height="20px" alt="search">
+                        </div>
+                    </div>
+                    <div onclick="showModal()" class="cta">Ajouter un utilisateur</div>
+                </div>
+                <div id="result-field"></div>
+                <div id="cancel-search" onclick="cancelSearch()">Annuler la recherche</div>
+                <table class="table">
+                    <thead class="table-head">
+                        <tr>
+                            <td class="table-cell text-white">Identité</td>
+                            <td class="table-cell text-white">Rôle</td>
+                            <td class="table-cell text-white">Email</td>
+                            <td class="table-cell text-white">Actions</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% users.forEach(user=> { %>
+                            <tr class="table-row user">
+                                <td class="table-cell semibold user-name">
+                                    <%= user.nom %>
+                                        <%= user.prenom %>
+                                </td>
+                                <td class="table-cell">
+                                    <%= user.role==='admin' ? 'Administrateur' : 'Membre' %>
+                                </td>
+                                <td class="table-cell user-email">
+                                    <%= user.email %>
+                                </td>
+                                <td class="table-cell table-actions">
+                                    <div onclick="showEditModal('<%=user._id%>', '<%=user.nom%>', '<%=user.prenom%>', '<%=user.role%>', '<%=user.email%>', '<%=user.identifiant%>')"
+                                        class="table-icon">
+                                        <img width="12px" height="12px" src="/img/edit.png" alt="reset">
+                                    </div>
+                                    <a onclick="return confirm('Voulez-vous vraiment supprimer cette utilisateur?')" href="/users/delete/<%=user._id%>" class="table-icon"><img width="12px"
+                                            height="12px" src="/img/remove.png" alt="remove"></a>
+                                    <div onclick="showResetModal('<%=user._id%>', '<%=user.nom%>', '<%=user.prenom%>', '<%=user.role%>', '<%=user.email%>')"
+                                        class="table-icon fill">
+                                        <img width="12px" height="12px" src="/img/reset.png" alt="reset">
+                                    </div>
+                                </td>
+                            </tr>
+                            <% }) %>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal">
+                <div class="modal-title">Ajouter un utilisateur</div>
+                <div class="modal-content scrollbar">
+                    <form action="/users/add" method="post" id="modal-form">
+                        <div class="modal-group">
+                            <label class="label">Nom</label>
+                            <input class="input" id="modal-nom" name="nom" type="text" placeholder="Nom">
+                        </div>
+                        <div class="modal-group">
+                            <label class="label">Prénom</label>
+                            <input class="input" id="modal-prenom" name="prenom" type="text" placeholder="Prénom">
+                        </div>
+                        <input type="hidden" name="id" id="modal-id">
+                        <div class="modal-group">
+                            <label class="label">Rôle</label>
+                            <select class="input" id="modal-role" name="role">
+                                <option value="admin">Administrateur</option>
+                                <option value="membre">Membre</option>
+                            </select>
+                        </div>
+                        <div class="modal-group">
+                            <label class="label">Email</label>
+                            <input class="input" name="email" type="text" id="modal-email" placeholder="Email">
+                        </div>
+                        <div class="modal-group" id="password-group">
+                            <label class="label">Mot de passe</label>
+                            <input minlength="12" id="modal-password" id="modal-identifiant" class="input"
+                                name="identifiant" type="text" placeholder="Mot de passe">
+                            <span id="generate-password" onclick="generatePassword()">Générer un mot de passe</span>
+                        </div>
+                        <div class="flex">
+                            <input type="submit" class="cta" value="Confirmer">
+                            <input onclick="closeModal()" type="button" class="ctd" value="Annuler">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="reset-modal">
+                <div class="modal-title">Réinitialiser un mot de passe</div>
+                <div class="modal-content scrollbar">
+                    <form method="post" id="reset-form">
+                        <input type="hidden" name="nom" id="reset-nom">
+                        <input type="hidden" name="prenom" id="reset-prenom">
+                        <input type="hidden" name="role" id="reset-role"><input type="hidden" name="email"
+                            id="reset-email">
+                        <p id="reset-title"></p>
+                        <div class="modal-group">
+                            <label class="label">Nouveau mot de passe</label>
+                            <input minlength="12" id="reset-password" class="input" name="identifiant" type="text"
+                                placeholder="Mot de passe">
+                            <span id="generate-password" onclick="resetPassword()">Générer un mot de passe</span>
+                        </div>
+                        <div class="flex">
+                            <input type="submit" class="cta" value="Confirmer">
+                            <input onclick="closeResetModal()" type="button" class="ctd" value="Annuler">
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+    </div>
+    <%- include('../_includes/footer.ejs') %>

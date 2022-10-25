@@ -1,0 +1,16 @@
+<%- include('../_includes/header.ejs') %>
+
+    <div class="grid">
+        <div class="navbar">
+            <%- include('../_includes/navbar.ejs') %>
+
+        </div>
+        <%- include('../_includes/sidebar.ejs') %>
+
+        <div class="content scrollbar">
+            Nom : <%=user.nom%>
+            Prénom : <%=user.prenom%>
+            Email : <%=user.email%>
+            Role : <%=user.role%>
+        </div>
+    </div>
